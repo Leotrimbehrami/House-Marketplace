@@ -9,10 +9,13 @@ function OAuth() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  // Funktion zum Anmelden mit Google
   const onGoogleClick = async () => {
     try {
       const auth = getAuth()
       const provider = new GoogleAuthProvider()
+
+      // Mit Google-Popup anmelden
       const result = await signInWithPopup(auth, provider)
       const user = result.user
 
@@ -21,6 +24,7 @@ function OAuth() {
       const docSnap = await getDoc(docRef)
 
       // If user doesn't exist create user
+      // Falls der Benutzer nicht existiert, erstellen
       if(!docSnap.exists()) {
         await setDoc(doc(db, 'users', user.uid), {
           name: user.displayName,
