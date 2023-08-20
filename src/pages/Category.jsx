@@ -4,6 +4,7 @@ import { collection, getDocs, query, where, orderBy, limit, startAfter } from "f
 import { db } from "../firebase.config"
 import { toast } from 'react-toastify'
 import Spinner from "../components/Spinner"
+import ListingItem from "../components/ListingItem"
 
 function Category() {
   const [listings,setListings] = useState(null)
@@ -30,6 +31,7 @@ function Category() {
 
           const listings = []
 
+          // Die Ergebnisse durchlaufen und zur "listings"-Array hinzufügen
           querySnap.forEach((doc) => {
             return listings.push({
               id: doc.id,
@@ -65,7 +67,11 @@ function Category() {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <h3 key={listing.id}>{listing.data.name}</h3>
+                <ListingItem  
+                  listing={listing.data} 
+                  id={listing.id} 
+                  key={listing.id}
+                />
               ))}
             </ul>
           </main>
