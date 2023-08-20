@@ -7,22 +7,30 @@ import {toast} from 'react-toastify'
 
 function Profile() {
   // user im useState speichern
+  // Firebase Auth-Instanz erhalten
   const auth = getAuth()
+
+  // State zum Speichern, ob Details geändert werden
   const [changeDetails, setChangeDetails ] = useState(false)
+
+  // State für Formulardaten (Name und E-Mail)
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
   })
 
+  // Daten aus formData extrahieren
   const { name, email } = formData
 
   const navigate = useNavigate()
 
+  // Funktion zum Ausloggen
   const onLogout = () => {
     auth.signOut()
     navigate('/')
   }
 
+  // Funktion zum Senden des Formulars
   const onSubmit = async() => {
     try {
       if(auth.currentUser.displayName !== name) {
@@ -42,6 +50,7 @@ function Profile() {
     }
   }
 
+  // Funktion zum Ändern des Formularwerts
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
